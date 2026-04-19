@@ -82,6 +82,8 @@ public class Movement : MonoBehaviour
         Caminar();
 
         Salto();
+
+
     }
 
     private void CameraMov()
@@ -187,5 +189,12 @@ public class Movement : MonoBehaviour
         {
             coyoteTime = coyoteTimeBase;
         }
+    }
+
+    private void HangAdditionalLogic()
+    {
+
+        if (this.gameObject.GetComponent<Hang>().has)
+
     }
 }

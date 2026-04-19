@@ -12,7 +12,7 @@ public class Hang : MonoBehaviour
 
     private Rigidbody rb;
 
-    public bool colgado;
+    public bool colgado, hasLeftFree, hasRightFree;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,6 +52,26 @@ public class Hang : MonoBehaviour
         {
             colgado = false;
         }
+
+        if(!Physics.Raycast(this.gameObject.transform.position + new Vector3 (0.5f, 0, 0), this.gameObject.transform.forward, 1))
+        {
+            hasRightFree = true;
+        }
+        else
+        {
+            hasRightFree = false;
+        }
+
+        if(!Physics.Raycast(this.gameObject.transform.position + new Vector3 (-0.5f, 0, 0), this.gameObject.transform.forward, 1))
+        {
+            hasLeftFree = true;
+        }
+        else
+        {
+            hasLeftFree = false; 
+        }
+
+        Debug.Log($"{hasLeftFree}, {hasRightFree}");
 
         //!RayCasts.CustomCast(this.gameObject, this.gameObject.transform.position + this.gameObject.transform.forward, new Vector3(0, this.gameObject.transform.localScale.y / 2, 0), 1f
     }
