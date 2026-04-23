@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,10 +18,10 @@ public class Movement : MonoBehaviour
 
     public float velocidadBase, fuerzaSaltoBase = 100, fuerzaSalto, coyoteTimeBase;
 
-    public float coyoteTime = 0.2f;
+    public float coyoteTime = 0.2f, cooldownSaltoHang = 0.6f;
     private int alreadyLoaded;
 
-    public bool enSuelo, coyote;
+    public bool enSuelo, coyote, colisionando, alreadyActivated;
 
     void Awake()
     {
@@ -47,6 +48,8 @@ public class Movement : MonoBehaviour
     void Update()
     {
         CameraMov();
+
+        HangAdditionalLogic();
     }
 
     void FixedUpdate()
@@ -55,10 +58,14 @@ public class Movement : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision)
-    {
+    {   
+        colisionando = true;
+
         if (collision.gameObject.CompareTag("Suelo") && !this.gameObject.GetComponent<Hang>().colgado)
         {
             enSuelo = true;
+
+            cooldownSaltoHang = 0.6f;
         }
 
         coyote = false;
@@ -66,6 +73,9 @@ public class Movement : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
+
+        colisionando = false;
+
         if (collision.gameObject.CompareTag("Suelo"))
         {
             enSuelo = false;
@@ -138,7 +148,6 @@ public class Movement : MonoBehaviour
 
     private void Salto()
     {
-
         if (this.gameObject.GetComponent<Hang>().colgado)
         {
             enSuelo = false;
@@ -157,7 +166,11 @@ public class Movement : MonoBehaviour
                 fuerzaSalto = fuerzaSaltoBase;
             }
 
-            rb.AddForce(Vector3.up * fuerzaSalto * 9.8f * Time.deltaTime, ForceMode.Impulse);
+            Debug.Log($"Vel Y {rb.linearVelocity.y}");
+
+            if(rb.linearVelocity.y < 2f)
+                rb.AddForce(Vector3.up * fuerzaSalto * 9.8f * Time.deltaTime, ForceMode.Impulse);
+            
         }
 
         rb.AddForce(Vector3.up * 5 * -9.8f, ForceMode.Acceleration);
@@ -194,7 +207,22 @@ public class Movement : MonoBehaviour
     private void HangAdditionalLogic()
     {
 
-        if (this.gameObject.GetComponent<Hang>().has)
+        if (this.gameObject.GetComponent<Hang>().colgado)
+        {
+            if(colisionando == false && this.gameObject.GetComponent<Hang>().ajustarHang)
+            {
+                this.gameObject.transform.position = this.gameObject.transform.position + transform.forward * 0.005f;
+            }
+
+            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 2.5f; 
+        }
+
+        else
+        {
+            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 1.5f;
+        }
 
     }
+
+
 }
