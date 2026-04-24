@@ -71,6 +71,14 @@ public class Movement : MonoBehaviour
         coyote = false;
     }
 
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Suelo") && !this.gameObject.GetComponent<Hang>().colgado)
+        {
+            enSuelo = true;
+        }
+    }
+
     void OnCollisionExit(Collision collision)
     {
 
@@ -214,7 +222,7 @@ public class Movement : MonoBehaviour
                 this.gameObject.transform.position = this.gameObject.transform.position + transform.forward * 0.005f;
             }
 
-            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 2.5f; 
+            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 2f; 
         }
 
         else

@@ -7,7 +7,7 @@ using VicGenLib.Logic;
 public class Hang : MonoBehaviour
 {
 
-    public bool canHang;
+    public bool canHang, colisionDetectada;
 
     public ControlsDetector controls;
 
@@ -32,17 +32,15 @@ public class Hang : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Casts();
         DetectHang();
     }
 
     private void DetectHang()
     {
 
-        this.gameObject.transform.GetChild(1).gameObject.transform.rotation = quaternion.Euler(0, this.gameObject.transform.GetChild(1).gameObject.transform.rotation.y + 0.36f, 0);
-
         Debug.DrawLine(this.gameObject.transform.GetChild(1).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).gameObject.transform.position + this.gameObject.transform.GetChild(1).gameObject.transform.forward + new Vector3 (0, this.gameObject.transform.localScale.y), Color.yellow, 0.1f);
-        if(!Physics.Raycast(this.gameObject.transform.GetChild(1).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).gameObject.transform.forward, longitudRaycastHang) && 
-            Physics.Raycast(this.gameObject.transform.GetChild(1).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y -0.3f), this.gameObject.transform.GetChild(1).gameObject.transform.forward, longitudRaycastHang))
+        if(canHang)
         {   
             Debug.Log("can hang");
             if (controls.M2M)
@@ -55,11 +53,13 @@ public class Hang : MonoBehaviour
             if (controls.M2S)
             {
                 colgado = false;
+                canHang = false;
             }
         }
         else
         {
             colgado = false;
+            
         }
 
         if(!Physics.Raycast(this.gameObject.transform.position + new Vector3 (0.5f, 0, 0), this.gameObject.transform.forward, 0.8f))
@@ -93,5 +93,30 @@ public class Hang : MonoBehaviour
         }
 
         //!RayCasts.CustomCast(this.gameObject, this.gameObject.transform.position + this.gameObject.transform.forward, new Vector3(0, this.gameObject.transform.localScale.y / 2, 0), 1f
+    }
+
+    private void Casts()
+    {
+        //Deteccion 360
+
+        for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
+        {
+            if(!Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, longitudRaycastHang) && 
+            Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y -0.3f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, longitudRaycastHang))
+            {
+                colisionDetectada = true;
+            }
+        }
+
+        if (colisionDetectada)
+        {
+            canHang = true;
+        }
+        else
+        {
+            canHang = false;
+        }
+
+        colisionDetectada = false;
     }
 }
