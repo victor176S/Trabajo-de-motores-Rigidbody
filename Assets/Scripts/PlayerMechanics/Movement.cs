@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
 
     public ControlsDetector controls;
 
+    private Animator animator;
+
     private Rigidbody rb;
 
     [SerializeField] private float velocidad;
@@ -37,6 +39,8 @@ public class Movement : MonoBehaviour
     }
     void Start()
     {
+        animator = this.gameObject.GetComponent<Animator>();
+
         rb = this.gameObject.GetComponent<Rigidbody>();
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;

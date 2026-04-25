@@ -102,7 +102,7 @@ public class Hang : MonoBehaviour
         for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
         {
             if(!Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, longitudRaycastHang) && 
-            Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y -0.3f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, longitudRaycastHang))
+                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y -0.3f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, longitudRaycastHang))
             {
                 colisionDetectada = true;
             }
