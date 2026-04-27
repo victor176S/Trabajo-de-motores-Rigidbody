@@ -13,7 +13,7 @@ public class PlayerAnimations : MonoBehaviour
 
     private Hang hangControl;
 
-    private float moving;
+    private float movingHang, moving;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,12 +42,12 @@ public class PlayerAnimations : MonoBehaviour
 
         Debug.Log($"{Mathf.Abs(rb.linearVelocity.x)}, {Mathf.Abs(rb.linearVelocity.z)}, {controls.ShiftM}");
 
-        animator.SetFloat("VelY", Mathf.Abs(rb.linearVelocity.y));
-        animator.SetFloat("HangMove", moving);
+        animator.SetFloat("VelY", rb.linearVelocity.y);
+        animator.SetFloat("HangMove", movingHang);
 
-        animator.SetBool("IsMoving", (rb.linearVelocity.x > 0.1f || rb.linearVelocity.x < -0.1f) || (rb.linearVelocity.z > 0.1f || rb.linearVelocity.z < -0.1f));
+        animator.SetBool("IsMoving", moving != 0);
         animator.SetBool("EnSuelo", movement.enSuelo);
-        animator.SetBool("IsRunning", (Mathf.Abs(rb.linearVelocity.x) > 0.1f || Mathf.Abs(rb.linearVelocity.z) > 0.1f) && controls.ShiftM);
+        animator.SetBool("IsRunning", controls.ShiftM);
         animator.SetBool("Hanging", hangControl.colgado);
         
 
@@ -57,17 +57,35 @@ public class PlayerAnimations : MonoBehaviour
 
     private void ValuesAssign()
     {
+        if (controls.WM)
+        {
+            moving = -2;
+        }
+
         if (controls.AM)
         {
+            movingHang = -1;
             moving = -1;
         }
 
         if (controls.DM)
         {
+            movingHang = 1;
             moving = 1;
         }
 
+        if (controls.SM)
+        {
+            moving = 2;
+        }
+
         if(!controls.DM && !controls.AM)
+        {
+            movingHang = 0;
+            
+        }
+
+        if (!Input.anyKey)
         {
             moving = 0;
         }
