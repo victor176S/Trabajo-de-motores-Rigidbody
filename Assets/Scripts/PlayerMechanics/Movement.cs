@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using VicGenLib.Logic;
 
 public class Movement : MonoBehaviour
 {
@@ -16,9 +17,11 @@ public class Movement : MonoBehaviour
 
     private Rigidbody rb;
 
+    private RaycastHit raycastInclinacion;
+
     [SerializeField] private float velocidad;
 
-    public float velocidadBase, fuerzaSaltoBase = 100, fuerzaSalto, coyoteTimeBase;
+    public float velocidadBase, fuerzaSaltoBase = 100, fuerzaSalto, coyoteTimeBase, anguloInclinacionSuelo;
 
     public float coyoteTime = 0.2f, cooldownSaltoHang = 0.6f;
     private int alreadyLoaded;
@@ -103,8 +106,8 @@ public class Movement : MonoBehaviour
 
         Caminar();
 
+        if(anguloInclinacionSuelo < 20)
         Salto();
-
 
     }
 
@@ -160,6 +163,12 @@ public class Movement : MonoBehaviour
 
     private void Salto()
     {
+        Physics.Raycast(gameObject.transform.position, Vector3.down, out raycastInclinacion, 1f);
+
+        anguloInclinacionSuelo = Vector3.Angle(Vector3.up, raycastInclinacion.normal);
+
+        Debug.Log($"angulo inclinacion del suelo {anguloInclinacionSuelo}");
+
         if (this.gameObject.GetComponent<Hang>().colgado)
         {
             enSuelo = false;
