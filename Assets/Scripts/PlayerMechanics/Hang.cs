@@ -22,7 +22,7 @@ public class Hang : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        longitudRaycastHang = 1;
+        longitudRaycastHang = 1.5f;
 
         controls = this.gameObject.GetComponent<Movement>().controls;
 
@@ -45,7 +45,9 @@ public class Hang : MonoBehaviour
             Debug.Log("can hang");
             if (controls.M2M)
             {
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x / 2, 1.176f, rb.linearVelocity.z /2);
+
+                //fix para contrarrestar la gravedad al estar colgado
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x /2, 4, rb.linearVelocity.z /2);
 
                 colgado = true;
             }

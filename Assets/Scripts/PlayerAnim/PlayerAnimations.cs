@@ -30,7 +30,7 @@ public class PlayerAnimations : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ValuesAssign();
 
@@ -49,10 +49,11 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("EnSuelo", movement.enSuelo);
         animator.SetBool("IsRunning", controls.ShiftM);
         animator.SetBool("Hanging", hangControl.colgado);
-        
 
         if(controls.SpaceM && movement.enSuelo)
         animator.SetTrigger("Salto");
+        if(hangControl.colgado)
+        animator.SetTrigger("Hang");
     }
 
     private void ValuesAssign()

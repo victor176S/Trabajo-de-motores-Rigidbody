@@ -66,8 +66,6 @@ public class Movement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {   
-        colisionando = true;
-
         if (collision.gameObject.CompareTag("Suelo") && !this.gameObject.GetComponent<Hang>().colgado)
         {
             enSuelo = true;
@@ -80,9 +78,11 @@ public class Movement : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Suelo") && !this.gameObject.GetComponent<Hang>().colgado)
+        colisionando = true;
+        if(Physics.Raycast(this.gameObject.transform.position, transform.up, 1f))
         {
-            enSuelo = true;
+            Debug.Log("DOU");
+            enSuelo = false;
         }
     }
 
@@ -102,11 +102,12 @@ public class Movement : MonoBehaviour
     private void Movimiento()
     {
 
+        fuerzaSalto = fuerzaSaltoBase;
+
         CoyoteTime();
 
         Caminar();
 
-        if(anguloInclinacionSuelo < 20)
         Salto();
 
     }
@@ -123,7 +124,6 @@ public class Movement : MonoBehaviour
 
     private void Caminar()
     {
-
         if (controls.ShiftM)
         {
             velocidad = velocidadBase * 1.5f;
@@ -174,42 +174,30 @@ public class Movement : MonoBehaviour
             enSuelo = false;
         }
 
-        if (controls.SpaceM && enSuelo || controls.SpaceM && this.gameObject.GetComponent<Hang>().colgado)
+        if (controls.SpaceM && enSuelo && (anguloInclinacionSuelo < 30 || anguloInclinacionSuelo != 0))
         {
 
-            if (this.gameObject.GetComponent<Hang>().colgado)
-            {
-                fuerzaSalto = fuerzaSaltoBase;
-                this.gameObject.GetComponent<Hang>().colgado = false;
-            }
-            else
-            {
-                fuerzaSalto = fuerzaSaltoBase;
-            }
-
-            Debug.Log($"Vel Y {rb.linearVelocity.y}");
-
-            if(rb.linearVelocity.y < 2f)
-                rb.AddForce(Vector3.up * fuerzaSalto * 9.8f * Time.deltaTime, ForceMode.Impulse);
             
+            rb.AddForce(Vector3.up * fuerzaSalto * 5 * 9.8f * Time.deltaTime, ForceMode.Impulse);
+            
+            Debug.Log($"Vel Y {rb.linearVelocity.y}");
         }
 
-        rb.AddForce(Vector3.up * 5 * -9.8f, ForceMode.Acceleration);
-
-        if (coyote == true && controls.SpaceM)
-        {
-            coyote = false;
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            rb.AddForce(Vector3.up * fuerzaSalto * 9.8f * Time.deltaTime, ForceMode.Impulse);
-        }
+        if(!this.gameObject.GetComponent<Hang>().colgado)
+        rb.AddForce(Vector3.up * 7.5f * -9.8f, ForceMode.Acceleration);
     }
 
     private void CoyoteTime()
     {
+        coyoteTime -= Time.deltaTime;
 
         if (coyoteTime < 0)
         {
             coyote = false;
+        }
+        else
+        {
+            coyote = true;
         }
 
         if (controls.SpaceM && enSuelo || this.gameObject.GetComponent<Hang>().colgado)
@@ -217,16 +205,34 @@ public class Movement : MonoBehaviour
             coyote = false;
         }
 
-        coyoteTime -= Time.deltaTime;
-
         if (enSuelo && rb.linearVelocity.y <= 0)
         {
             coyoteTime = coyoteTimeBase;
         }
+
+        if(coyote == true && controls.SpaceM && !enSuelo && !this.gameObject.GetComponent<Hang>().colgado)
+        {
+            coyoteTime = 0;
+            coyote = false;
+
+            rb.AddForce(Vector3.up * fuerzaSalto * 10 * 9.8f * Time.deltaTime, ForceMode.Impulse);
+        }
+
     }
 
     private void HangAdditionalLogic()
     {
+
+        if (this.gameObject.GetComponent<Hang>().colgado)
+        {
+            fuerzaSalto = fuerzaSaltoBase *3;
+            this.gameObject.GetComponent<Hang>().colgado = false;
+
+            if (controls.SpaceM)
+            {
+                rb.AddForce(Vector3.up * fuerzaSalto * 2 * 9.8f * Time.deltaTime, ForceMode.Impulse);
+            }
+        }
 
         if (this.gameObject.GetComponent<Hang>().colgado)
         {
@@ -235,12 +241,12 @@ public class Movement : MonoBehaviour
                 this.gameObject.transform.position = this.gameObject.transform.position + transform.forward * 0.005f;
             }
 
-            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 2f; 
+            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 3f; 
         }
 
         else
         {
-            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 1.5f;
+            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 2f;
         }
 
     }
