@@ -45,7 +45,6 @@ public class Hang : MonoBehaviour
             Debug.Log("can hang");
             if (controls.M2M)
             {
-
                 //fix para contrarrestar la gravedad al estar colgado
                 rb.linearVelocity = new Vector3(rb.linearVelocity.x /2, 4, rb.linearVelocity.z /2);
 
@@ -103,6 +102,8 @@ public class Hang : MonoBehaviour
 
         for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
         {
+            //el primer raycast verifica que haya sitio para agarrarse (hueco)
+            //el segundo verifica que haya un objeto al que agarrarse
             if(!Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, longitudRaycastHang) && 
                 Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y -0.3f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, longitudRaycastHang))
             {
