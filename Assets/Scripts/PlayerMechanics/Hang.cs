@@ -7,13 +7,13 @@ using VicGenLib.Logic;
 public class Hang : MonoBehaviour
 {
 
-    public bool canHang, colisionDetectada;
+    public bool canHang;
 
     public ControlsDetector controls;
 
     private Rigidbody rb;
 
-    public bool colgado, hasLeftFree, hasRightFree, ajustarHang, ajusteDetectado, usarGravedad;
+    public bool colgado, hasLeftFree, hasRightFree, espacioDetect, objetoDetectado, ajustarHang, ajusteDetectado, usarGravedad;
 
     public RaycastHit raycastAjuste;
 
@@ -22,6 +22,7 @@ public class Hang : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //a lo mejor el problema está aquí y en el otro lado donde se asigna
         longitudRaycastHang = 1.5f;
 
         controls = this.gameObject.GetComponent<Movement>().controls;
@@ -32,6 +33,7 @@ public class Hang : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log($"can Hang{canHang}");
         DetectHang();
         Casts();
     }
@@ -130,48 +132,75 @@ public class Hang : MonoBehaviour
 
         for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
         {
-            RaycastHit hitEspacioDisp, hitObjeto;
-            //el primer raycast verifica que haya sitio para agarrarse (hueco)
-            //el segundo verifica que haya un objeto al que agarrarse
+            RaycastHit hitObjeto;
+
+                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y - 0.1f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitObjeto, longitudRaycastHang);
+
+                Debug.Log($"colider hit Objeto {hitObjeto.collider}");
+
+                if(hitObjeto.collider != null)
+                {
+                    objetoDetectado = true;
+                }
+                else
+                {
+                    objetoDetectado = false;
+                }
+
+                Debug.Log($"ajusteDetectado {ajusteDetectado}");
             
-            
-            Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitEspacioDisp, longitudRaycastHang);
-            Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y -0.1f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitObjeto, longitudRaycastHang);
 
-            Debug.DrawRay(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y +0.15f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, Color.blue, 0.01f);
-            //Debug.DrawRay(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, Color.blue, 0.01f);
-            //Debug.DrawRay(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y -0.3f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, Color.blue, 0.01f);
-
-            
-
-            if(hitEspacioDisp.collider == null && hitObjeto.collider != null)
+            if (objetoDetectado)
             {
-                canHang = true;
-            }
-            else
-            {
-                canHang = false;
-            }
-
-            if(hitObjeto.collider != null)
-            {
-                colisionDetectada = true;
-            }
-            else
-            {
-                colisionDetectada = false;
-            }
-
-            if (ajusteDetectado && colgado)
-            {
-                ajustarHang = true;
-            }
-            else
-            {
-                ajustarHang = false;
+                break;
             }
         }
+
+        for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
+        {
+            RaycastHit hitEspacioDisp;
+
+                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitEspacioDisp, longitudRaycastHang);
+
+                Debug.Log($"colider hit EspacioDisp {hitEspacioDisp.collider}");
+
+                if(hitEspacioDisp.collider == null)
+                {
+                    espacioDetect = true;
+                }
+                else
+                {
+                    espacioDetect = false;
+                }
+
+                Debug.Log($"ajusteDetectado {ajusteDetectado}");
+            
+
+            if (!espacioDetect)
+            {
+                break;
+            }
+        }
+
+        if(espacioDetect && objetoDetectado)
+        {
+            canHang = true;
+        }
+        else
+        {
+            canHang = false;
+        }
+
+        if (ajusteDetectado && colgado)
+        {
+            ajustarHang = true;
+        }
+        else
+        {
+            ajustarHang = false;
+        }
     }
+}
 
     /*private void Casts()
     {
@@ -202,4 +231,3 @@ public class Hang : MonoBehaviour
 
         colisionDetectada = false;
     }*/
-}

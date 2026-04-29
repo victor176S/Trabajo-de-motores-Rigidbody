@@ -174,7 +174,7 @@ public class Movement : MonoBehaviour
             enSuelo = false;
         }
 
-        if (controls.SpaceM && enSuelo && (anguloInclinacionSuelo < 30 || anguloInclinacionSuelo != 0))
+        if (controls.SpaceM && enSuelo && anguloInclinacionSuelo < 30 && anguloInclinacionSuelo != 0)
         {
 
             
