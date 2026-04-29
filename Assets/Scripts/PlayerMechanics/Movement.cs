@@ -183,7 +183,7 @@ public class Movement : MonoBehaviour
             Debug.Log($"Vel Y {rb.linearVelocity.y}");
         }
 
-        if(!this.gameObject.GetComponent<Hang>().colgado)
+        if(this.gameObject.GetComponent<Hang>().usarGravedad)
         rb.AddForce(Vector3.up * 7.5f * -9.8f, ForceMode.Acceleration);
     }
 
@@ -225,28 +225,27 @@ public class Movement : MonoBehaviour
 
         if (this.gameObject.GetComponent<Hang>().colgado)
         {
-            fuerzaSalto = fuerzaSaltoBase *3;
             this.gameObject.GetComponent<Hang>().colgado = false;
 
             if (controls.SpaceM)
             {
-                rb.AddForce(Vector3.up * fuerzaSalto * 2 * 9.8f * Time.deltaTime, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * fuerzaSalto * 10 * 9.8f * Time.deltaTime, ForceMode.Impulse);
             }
         }
 
         if (this.gameObject.GetComponent<Hang>().colgado)
         {
-            if(colisionando == false && this.gameObject.GetComponent<Hang>().ajustarHang)
+            if(colisionando == false)
             {
-                this.gameObject.transform.position = this.gameObject.transform.position + transform.forward * 0.005f;
+                this.gameObject.transform.position = this.gameObject.transform.position + transform.forward * 0.05f;
             }
 
-            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 3f; 
+            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 7f; 
         }
 
         else
         {
-            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 2f;
+            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 5f;
         }
 
     }
