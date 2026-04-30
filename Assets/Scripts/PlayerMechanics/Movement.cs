@@ -66,7 +66,7 @@ public class Movement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {   
-        if (collision.gameObject.CompareTag("Suelo") && !this.gameObject.GetComponent<Hang>().colgado)
+        if (collision.gameObject.CompareTag("Suelo") && !this.gameObject.GetComponent<Hang>().colgado && !Physics.Raycast(this.gameObject.transform.position, transform.up, 1f))
         {
             enSuelo = true;
 
@@ -79,7 +79,14 @@ public class Movement : MonoBehaviour
     void OnCollisionStay(Collision collision)
     {
         colisionando = true;
-        if(Physics.Raycast(this.gameObject.transform.position, transform.up, 1f))
+
+        if (collision.gameObject.CompareTag("Suelo"))
+        {
+            enSuelo = true;
+        }
+        if(Physics.Raycast(this.gameObject.transform.position, transform.up, 1f)
+            &&
+            !Physics.Raycast(this.gameObject.transform.position, transform.up * -1, 10f))
         {
             Debug.Log("DOU");
             enSuelo = false;
@@ -96,7 +103,7 @@ public class Movement : MonoBehaviour
             enSuelo = false;
         }
 
-        coyote = true;
+        //coyote = true;
     }
 
     private void Movimiento()
@@ -174,7 +181,7 @@ public class Movement : MonoBehaviour
             enSuelo = false;
         }
 
-        if (controls.SpaceM && enSuelo && anguloInclinacionSuelo < 30 && anguloInclinacionSuelo != 0)
+        if (controls.SpaceM && enSuelo && anguloInclinacionSuelo < 30 && anguloInclinacionSuelo != 0 && !coyote)
         {
 
             
@@ -239,16 +246,6 @@ public class Movement : MonoBehaviour
             {
                 this.gameObject.transform.position = this.gameObject.transform.position + transform.forward * 0.05f;
             }
-
-            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 7f; 
         }
-
-        else
-        {
-            this.gameObject.GetComponent<Hang>().longitudRaycastHang = 5f;
-        }
-
     }
-
-
 }

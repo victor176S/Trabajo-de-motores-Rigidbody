@@ -9,11 +9,17 @@ public class Hang : MonoBehaviour
 
     public bool canHang;
 
+    [SerializeField] private bool debugPos;
+
+    [SerializeField] private GameObject debugPosObject;
+
     public ControlsDetector controls;
+
+    public Movement movement;
 
     private Rigidbody rb;
 
-    public bool colgado, hasLeftFree, hasRightFree, espacioDetect, objetoDetectado, ajustarHang, ajusteDetectado, usarGravedad;
+    public bool colgado, espacioDetect, objetoDetectado, ajustarHang, ajusteDetectado, usarGravedad;
 
     public RaycastHit raycastAjuste;
 
@@ -23,11 +29,11 @@ public class Hang : MonoBehaviour
     void Start()
     {
         //a lo mejor el problema está aquí y en el otro lado donde se asigna
-        longitudRaycastHang = 1.5f;
-
         controls = this.gameObject.GetComponent<Movement>().controls;
 
         rb = this.gameObject.GetComponent<Rigidbody>();
+
+        movement = this.gameObject.GetComponent<Movement>();
     }
 
     // Update is called once per frame
@@ -36,10 +42,19 @@ public class Hang : MonoBehaviour
         Debug.Log($"can Hang{canHang}");
         DetectHang();
         Casts();
+        if (debugPos)
+        {
+            this.gameObject.transform.position = debugPosObject.transform.position;
+        }
+        debugPos = false;
     }
 
     private void DetectHang()
     {
+        if (controls.M2S || (movement.enSuelo && colgado == false))
+        {
+            ajustarHang = false;
+        }
 
         //Debug.DrawLine(this.gameObject.transform.GetChild(1).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).gameObject.transform.position + this.gameObject.transform.GetChild(1).gameObject.transform.forward + new Vector3 (0, this.gameObject.transform.localScale.y), Color.yellow, 0.1f);
         if(canHang)
@@ -73,24 +88,6 @@ public class Hang : MonoBehaviour
             colgado = false;
         }
 
-        if(!Physics.Raycast(this.gameObject.transform.position + new Vector3 (0.5f, 0, 0), this.gameObject.transform.forward, 0.8f))
-        {
-            hasRightFree = true;
-        }
-        else
-        {
-            hasRightFree = false;
-        }
-
-        if(!Physics.Raycast(this.gameObject.transform.position + new Vector3 (-0.5f, 0, 0), this.gameObject.transform.forward, 0.8f))
-        {
-            hasLeftFree = true;
-        }
-        else
-        {
-            hasLeftFree = false; 
-        }
-
         if (!colgado)
         {
             usarGravedad = true;
@@ -106,13 +103,12 @@ public class Hang : MonoBehaviour
         for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
         {
             RaycastHit hitAjuste;
-            if(colgado)
-            {
-                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y +0.15f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitAjuste, longitudRaycastHang);
-
+            
+                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitAjuste, longitudRaycastHang);
+                
                 Debug.Log($"colider hit ajuste{hitAjuste.collider}");
 
-                if(hitAjuste.collider != null && colgado)
+                if(hitAjuste.collider != null && canHang)
                 {
                     ajusteDetectado = true;
                 }
@@ -122,7 +118,7 @@ public class Hang : MonoBehaviour
                 }
 
                 Debug.Log($"ajusteDetectado {ajusteDetectado}");
-            }
+            
 
             if (ajusteDetectado)
             {
@@ -134,7 +130,7 @@ public class Hang : MonoBehaviour
         {
             RaycastHit hitObjeto;
 
-                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y - 0.1f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitObjeto, longitudRaycastHang);
+                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, - 0.4f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitObjeto, longitudRaycastHang);
 
                 Debug.Log($"colider hit Objeto {hitObjeto.collider}");
 
@@ -160,7 +156,7 @@ public class Hang : MonoBehaviour
         {
             RaycastHit hitEspacioDisp;
 
-                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitEspacioDisp, longitudRaycastHang);
+                Physics.Raycast(this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.position + new Vector3 (0, this.gameObject.transform.localScale.y + 0.3f), this.gameObject.transform.GetChild(1).GetChild(i).gameObject.transform.forward, out hitEspacioDisp, longitudRaycastHang);
 
                 Debug.Log($"colider hit EspacioDisp {hitEspacioDisp.collider}");
 
