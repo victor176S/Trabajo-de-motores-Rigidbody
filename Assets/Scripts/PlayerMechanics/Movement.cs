@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
 
     private Animator animator;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     private RaycastHit raycastInclinacion;
 

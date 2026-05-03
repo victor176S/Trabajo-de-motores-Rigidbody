@@ -5,7 +5,7 @@ public class PlayerAnimations : MonoBehaviour
 {
     private Rigidbody rb;
 
-    private Animator animator;
+    public Animator animator;
 
     private ControlsDetector controls;
 

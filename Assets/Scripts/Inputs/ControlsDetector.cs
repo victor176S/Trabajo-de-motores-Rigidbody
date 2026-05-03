@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using VicGenLib.Controllers;
 
 public class ControlsDetector : MonoBehaviour

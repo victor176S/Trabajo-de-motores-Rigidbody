@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Suelo
+  - Config
+  - Controls
+  - CheckPoint
   layers:
   - Default
   - TransparentFX

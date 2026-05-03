@@ -100,7 +100,7 @@ public class Hang : MonoBehaviour
     {
         Debug.Log($"colgado {colgado}");
         //Deteccion 360
-        for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
+        /*for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
         {
             RaycastHit hitAjuste;
             
@@ -124,7 +124,7 @@ public class Hang : MonoBehaviour
             {
                 break;
             }
-        }
+        }*/
 
         for(int i = 0; i < this.gameObject.transform.GetChild(1).childCount; i++)
         {
