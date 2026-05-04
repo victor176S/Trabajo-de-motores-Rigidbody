@@ -1,4 +1,5 @@
 ﻿<Solution>
+  <Project Path="Fusion.Unity.Editor.csproj" />
   <Project Path="UniTask.csproj" />
   <Project Path="FastScriptReload.Editor.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
@@ -6,11 +7,13 @@
   <Project Path="UniTask.Addressables.csproj" />
   <Project Path="sc.terrain.painter.editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Fusion.Unity.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
   <Project Path="sc.terrain.painter.runtime.csproj" />
   <Project Path="FastScriptReload.Runtime.csproj" />
   <Project Path="UniTask.Editor.csproj" />
   <Project Path="UniTask.DOTween.csproj" />
   <Project Path="UnityPlayModeSaver.csproj" />
+  <Project Path="Unity.Fusion.CodeGen.csproj" />
   <Project Path="UnityPlayModeSaverEditor.csproj" />
 </Solution>

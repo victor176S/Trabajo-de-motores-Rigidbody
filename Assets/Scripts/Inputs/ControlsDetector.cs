@@ -15,6 +15,8 @@ public class ControlsDetector : MonoBehaviour
     public Vector2 mouseMov;
     public float xRotation, yRotation;
 
+    public GameObject player;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
