@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
-using NUnit.Framework;
-using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public NetworkManager instance;
     public NetworkRunner runnerPrefab;
 
     public static NetworkRunner runnerInstance;
 
     public int playerCount;
+
+    public NetworkObject playerPrefab, controls;
 
     public NetworkObject[] players;
 
@@ -28,6 +29,19 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private SceneAsset gameScene;
 
     [SerializeField] private SceneAsset lobbyScene;
+
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -177,13 +191,15 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        /*
+
+        
+        
         if(player == runner.LocalPlayer)
         {
             NetworkObject playerObject = runner.Spawn(playerPrefab, Vector3.zero);
             runner.SetPlayerObject(player, playerObject);
         }
-        */
+        
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

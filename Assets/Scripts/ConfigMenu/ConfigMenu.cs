@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class ConfigMenu : MonoBehaviour
 {
 
-    public GameObject configMenu, configValues, menu;
+    public GameObject configMenu, configValues, menu, lobby;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,9 +24,9 @@ public class ConfigMenu : MonoBehaviour
         menu.SetActive(!configMenu.activeSelf);
     }
 
-    public void StartGame()
+    public void OpenLobbyMenu()
     {
-        SceneManager.LoadScene(1);
+        lobby.SetActive(!lobby.activeSelf);;
     }
 
     public void Close()

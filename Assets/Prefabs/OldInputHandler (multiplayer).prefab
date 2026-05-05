@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 816624746901745063}
   - component: {fileID: 5113539264695851801}
+  - component: {fileID: 968855228166685725}
   m_Layer: 0
   m_Name: OldInputHandler (multiplayer)
   m_TagString: Controls
@@ -75,3 +76,22 @@ MonoBehaviour:
   mouseMov: {x: 0, y: 0}
   xRotation: 0
   yRotation: 0
+  player: {fileID: 0}
+--- !u!114 &968855228166685725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2500260369560719206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 3579450735
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
