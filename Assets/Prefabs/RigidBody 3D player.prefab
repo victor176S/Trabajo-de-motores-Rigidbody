@@ -231,7 +231,6 @@ GameObject:
   - component: {fileID: 7779612719383524529}
   - component: {fileID: 1595593498452819451}
   - component: {fileID: 2269598215911298671}
-  - component: {fileID: 2997984343179761090}
   - component: {fileID: -1954186612911739369}
   m_Layer: 0
   m_Name: RigidBody 3D player
@@ -412,23 +411,6 @@ MonoBehaviour:
   gotToCheckPoint2: 0
   gotToCheckPoint3: 0
   checkPoints: {fileID: 0}
---- !u!114 &2997984343179761090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984103049029388010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
-  _stateAuthorityChangeErrorCorrectionDelta: 0
-  SyncScale: 0
-  SyncParent: 0
-  _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
 --- !u!114 &-1954186612911739369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,8 +427,7 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 2997984343179761090}
+  NetworkedBehaviours: []
   ForceRemoteRenderTimeframe: 0
 --- !u!1 &1025086900836861835
 GameObject:

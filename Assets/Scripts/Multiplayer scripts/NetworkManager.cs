@@ -14,9 +14,9 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public int playerCount;
 
-    public NetworkObject playerPrefab, controls;
+    public GameObject playerPrefab, controls;
 
-    public NetworkObject[] players;
+    public GameObject[] players;
 
     [SerializeField] private string lobbyName = "default";
 
@@ -48,10 +48,22 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     private void Start()
     {
         
+        DontDestroyOnLoad(this);
+        
         runnerInstance = Instantiate(runnerPrefab);
 
-       //Conexion con el servidor
+        runnerInstance.AddCallbacks(this);
+
+       //Conexion con el servidor de PHOTON, NO la sala
         runnerInstance.JoinSessionLobby(SessionLobby.Shared, lobbyName);
+    }
+
+    void Update()
+    {
+        if(SceneManager.GetActiveScene().name == "Juego")
+        {
+            
+        }
     }
 
     public static void ReturnToLobby()
@@ -192,11 +204,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
 
-        
+        playerCount ++;
         
         if(player == runner.LocalPlayer)
         {
-            NetworkObject playerObject = runner.Spawn(playerPrefab, Vector3.zero);
+            NetworkObject playerObject = runner.Spawn(playerPrefab);
             runner.SetPlayerObject(player, playerObject);
         }
         
@@ -204,7 +216,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        
+        playerCount --;
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
@@ -265,24 +277,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         /*Se supone que al cargar por completo la escena, busca todos los jugadores y prefabs de controles
         despues se asigna un prefab de control a cada jugador, para que se puedan manejar de forma independiente*/
-        if(SceneManager.GetActiveScene().name == "Juego")
-        {
-            //placeholder de recuento de jugadores
-            int playerCount = 0;
-
-            List<GameObject> playersInGame = new List<GameObject>();
-            List<GameObject> controls = new List<GameObject>();
-            GameObject.FindGameObjectsWithTag("Player", playersInGame);
-            GameObject.FindGameObjectsWithTag("Controls", controls);
-            for(int i = 0; i < playerCount; i++)
-            {
-                players[i].GetComponent<Movement>().controls = controls[i].GetComponent<ControlsDetector>();
-                players[i] = playersInGame[i].GetComponent<NetworkObject>();
-            }
-        }
-        
-        
-        
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
