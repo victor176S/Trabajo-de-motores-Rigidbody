@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -82,7 +83,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void CreateRandomSession()
     {
-        int randomInt = Random.Range(1000, 9999);
+        int randomInt = UnityEngine.Random.Range(1000, 9999);
 
         string randomSessionName = "Room-" + randomInt.ToString();
 
@@ -167,6 +168,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         entryScript.joinButton.interactable = session.IsOpen;
 
         newEntry.SetActive(session.IsVisible);
+
+        newEntry.transform.position = new Vector3(newEntry.transform.position.x, newEntry.transform.position.y, 0);
+
+        //poner aqui la entry en 0,0,0
     }
 
     private void DeleteOldSessionFromUI(List<SessionInfo> sessionList)
