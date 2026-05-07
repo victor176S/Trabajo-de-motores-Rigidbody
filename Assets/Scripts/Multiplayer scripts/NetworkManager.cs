@@ -86,7 +86,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             Scene = SceneRef.FromIndex(1),
             SessionName = randomSessionName,
             GameMode = GameMode.Shared,
-            PlayerCount = 2,
+            PlayerCount = 2, //aqui se pone el numero de jugadores de la sala
             IsVisible = true,
         });
     }
