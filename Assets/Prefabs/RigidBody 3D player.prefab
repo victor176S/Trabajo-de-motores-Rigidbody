@@ -232,6 +232,8 @@ GameObject:
   - component: {fileID: 1595593498452819451}
   - component: {fileID: 2269598215911298671}
   - component: {fileID: -1954186612911739369}
+  - component: {fileID: -3903115625488494093}
+  - component: {fileID: -3348198182577368475}
   m_Layer: 0
   m_Name: RigidBody 3D player
   m_TagString: Player
@@ -272,6 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f729beb47448f014892c076686a50f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
+  controlFind: []
+  controlNetwork: {fileID: 0}
   controls: {fileID: 0}
   rb: {fileID: 0}
   velocidad: 8
@@ -427,8 +431,70 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 7170401250953157310}
+  - {fileID: -3903115625488494093}
+  - {fileID: -3348198182577368475}
   ForceRemoteRenderTimeframe: 0
+--- !u!114 &-3903115625488494093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984103049029388010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19a3f1ff95814e42925c14740a202e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeyBoard
+  A: 0
+  W: 0
+  S: 0
+  D: 0
+  Space: 0
+  Shift: 0
+  M1: 0
+  M2: 0
+  AM: 0
+  WM: 0
+  SM: 0
+  DM: 0
+  SpaceM: 0
+  ShiftM: 0
+  M1M: 0
+  M2M: 0
+  AS: 0
+  WS: 0
+  SS: 0
+  DS: 0
+  SpaceS: 0
+  ShiftS: 0
+  M1S: 0
+  M2S: 0
+  sensX: 1000
+  sensY: 1000
+  downAnglesLimit: -60
+  upAnglesLimit: 90
+  xRotation: 0
+  yRotation: 0
+--- !u!114 &-3348198182577368475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984103049029388010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &1025086900836861835
 GameObject:
   m_ObjectHideFlags: 0

@@ -1377,7 +1377,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.000019073486}
-  m_SizeDelta: {x: 0, y: 15}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &365130079
 MonoBehaviour:
@@ -1695,7 +1695,7 @@ RectTransform:
   m_Father: {fileID: 132553505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1772,9 +1772,9 @@ RectTransform:
   m_Father: {fileID: 1818740145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &651153729
 MonoBehaviour:
@@ -2241,7 +2241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -235, y: 20}
+  m_AnchoredPosition: {x: -375, y: 53}
   m_SizeDelta: {x: 160, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1153911182
@@ -2708,7 +2708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -235, y: -67}
+  m_AnchoredPosition: {x: -375, y: -34}
   m_SizeDelta: {x: 160, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1363063471
@@ -3792,8 +3792,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: -11}
-  m_SizeDelta: {x: 272.5781, y: 255.1584}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 500, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1818740146
 MonoBehaviour:
@@ -3896,7 +3896,9 @@ MonoBehaviour:
   runnerPrefab: {fileID: 242376806735299626, guid: 35a7b5652c4ebd543a01ef0ea5507eaa, type: 3}
   playerCount: 0
   playerPrefab: {fileID: 984103049029388010, guid: 89e86a1071763f142a23461ab694348f, type: 3}
-  control: {fileID: 2500260369560719206, guid: b2f6efa4367cc1d4786d056225f56a60, type: 3}
+  control: {fileID: 0}
+  players: []
+  controls: []
   lobbyName: default
   sessionListContentParent: {fileID: 365130078}
   sessionListEntryPrefab: {fileID: 9077936564986563096, guid: fa6c47ee1b7aa394080ceeb6d05c6ee9, type: 3}
@@ -4074,7 +4076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1979406958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4197,7 +4199,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -237, y: 86}
+  m_AnchoredPosition: {x: -375.40015, y: 119}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2005631977
@@ -4487,7 +4489,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 591215610}
   m_HandleRect: {fileID: 591215609}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

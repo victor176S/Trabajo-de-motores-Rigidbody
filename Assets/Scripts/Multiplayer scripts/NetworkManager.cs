@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,9 +14,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public int playerCount;
 
-    public GameObject playerPrefab, controls;
-
-    public GameObject[] players;
+    public GameObject playerPrefab, control;
 
     [SerializeField] private string lobbyName = "default";
 
@@ -27,9 +24,9 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     [SerializeField] private Dictionary<string, GameObject> sessionListUiDictionary = new Dictionary<string, GameObject>();
 
-    [SerializeField] private SceneAsset gameScene;
+    [SerializeField] private int gameScene;
 
-    [SerializeField] private SceneAsset lobbyScene;
+    [SerializeField] private int lobbyScene;
 
     void Awake()
     {
@@ -61,10 +58,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     void Update()
     {
-        if(SceneManager.GetActiveScene().name == "Juego")
-        {
-            
-        }
+        
     }
 
     public static void ReturnToLobby()
@@ -76,7 +70,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason reason)
     {
-        SceneManager.LoadScene(lobbyScene.name);
+        SceneManager.LoadScene(0);
     }
 
     //salas aleatorias
@@ -89,7 +83,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
         runnerInstance.StartGame(new StartGameArgs()
         {
-            Scene = SceneRef.FromIndex(GetSceneIndex(gameScene.name)),
+            Scene = SceneRef.FromIndex(1),
             SessionName = randomSessionName,
             GameMode = GameMode.Shared,
             PlayerCount = 2,
@@ -213,9 +207,12 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         
         if(player == runner.LocalPlayer)
         {
-            NetworkObject playerObject = runner.Spawn(playerPrefab);
+            NetworkObject playerObject = runner.Spawn(playerPrefab, playerPrefab.transform.position, quaternion.identity, player);
+            NetworkObject controlsObject = runner.Spawn(control, control.transform.position, quaternion.identity, player);
+            //NetworkObject controlsObject = runner.Spawn(control, transform.position, quaternion.identity, player);
             runner.SetPlayerObject(player, playerObject);
         }
+        
         
     }
 

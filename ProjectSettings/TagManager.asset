@@ -8,6 +8,8 @@ TagManager:
   - Config
   - Controls
   - CheckPoint
+  - NetworkRunner
+  - PlayerCam
   layers:
   - Default
   - TransparentFX
