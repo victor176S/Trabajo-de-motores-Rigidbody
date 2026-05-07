@@ -1,8 +1,9 @@
 using System;
+using Fusion;
 using UnityEngine;
 using VicGenLib.Controllers;
 
-public class ControlsDetector : MonoBehaviour
+public class ControlsDetector : NetworkBehaviour
 {
 
     //Presionar
@@ -12,7 +13,6 @@ public class ControlsDetector : MonoBehaviour
     //Soltar
     public bool AS, WS, SS, DS, SpaceS, ShiftS, M1S, M2S;
     public float sensX, sensY, downAnglesLimit, upAnglesLimit;
-    public Vector2 mouseMov;
     public float xRotation, yRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,9 +24,9 @@ public class ControlsDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(this.gameObject.GetComponent<NetworkObject>().HasInputAuthority)
         Controles();
     }
-
     public void Controles()
     {
 
@@ -80,8 +80,8 @@ public class ControlsDetector : MonoBehaviour
 
         //movimiento ratón
 
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Runner.DeltaTime * sensX;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Runner.DeltaTime * sensY;
 
         yRotation += mouseX;
 
