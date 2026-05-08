@@ -16,10 +16,18 @@ public class AudioStorage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Invoke(nameof(AssignObjects), 5f);
+        configManagerObj = GameObject.FindWithTag("Config");
+
+        configManager = configManagerObj.GetComponent<ConfigManager>();
+
+        controlsObject = GameObject.FindWithTag("Controls");
+
+        controls = controlsObject.GetComponent<ControlsDetector>();
+
+        player = GameObject.FindWithTag("Player");
+
+        movement = player.GetComponent<Movement>();
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -39,20 +47,5 @@ public class AudioStorage : MonoBehaviour
             Debug.Log("Sonido");
             this.gameObject.transform.GetChild(1).gameObject.GetComponent<AudioSource>().PlayOneShot(audios[0]);
         }
-    }
-
-    void AssignObjects()
-    {
-        configManagerObj = GameObject.FindWithTag("Config");
-
-        configManager = configManagerObj.GetComponent<ConfigManager>();
-
-        controlsObject = GameObject.FindWithTag("Controls");
-
-        controls = controlsObject.GetComponent<ControlsDetector>();
-
-        player = GameObject.FindWithTag("Player");
-
-        movement = player.GetComponent<Movement>();
     }
 }
