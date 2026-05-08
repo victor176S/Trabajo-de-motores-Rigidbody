@@ -1,22 +1,15 @@
 using System.Collections;
-using Fusion;
-using Fusion.Sockets;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using VicGenLib.Logic;
 
-public class Movement : NetworkBehaviour
+public class Movement : MonoBehaviour
 {
 
     [Header("Solo es necesario asignar aqui los controles")]
-
-    public GameObject[] controlFind;
-
-    public NetworkObject controlNetwork;
 
     public ControlsDetector controls;
 
@@ -49,21 +42,6 @@ public class Movement : NetworkBehaviour
     }
     void Start()
     {
-
-        this.gameObject.GetComponent<NetworkTransform>().DisableSharedModeInterpolation = true;
-
-        controlFind = GameObject.FindGameObjectsWithTag("Controls");
-
-        foreach (GameObject control in controlFind)
-        {
-            if(control.GetComponent<NetworkObject>().InputAuthority == this.gameObject.GetComponent<NetworkObject>().InputAuthority)
-            {
-                controlNetwork = control.GetComponent<NetworkObject>();
-            }
-        }
-
-        controls = controlNetwork.gameObject.GetComponent<ControlsDetector>();
-
         animator = this.gameObject.GetComponent<Animator>();
 
         rb = this.gameObject.GetComponent<Rigidbody>();
@@ -76,18 +54,9 @@ public class Movement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!this.gameObject.GetComponent<NetworkObject>().HasInputAuthority)
-        {
-            this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        }
-
-        if (this.gameObject.GetComponent<NetworkObject>().HasInputAuthority)
-        {
-            HangAdditionalLogic();
-        }
-
         CameraMov();
-        
+
+        HangAdditionalLogic();
     }
 
     void FixedUpdate()
@@ -155,12 +124,7 @@ public class Movement : NetworkBehaviour
 
         //Movimiento ratón
 
-        if(!this.gameObject.GetComponent<NetworkObject>().HasInputAuthority) return;
-
         this.gameObject.transform.rotation = Quaternion.Euler(0, controls.yRotation, 0);
-
-        Debug.Log($"Y rotation {controls.yRotation}");
-
         this.gameObject.transform.GetChild(0).gameObject.transform.localRotation = Quaternion.Euler(controls.xRotation, 0, 0);
 
     }
